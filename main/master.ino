@@ -49,9 +49,7 @@ void setup(){
 
 void loop(){
 
-    // Tomando de Abertura do Portão
-
-    // Informações da Data e Hora
+        // Informações da Data e Hora
     
     while (!timeClient.update()) {
         timeClient.focusUpdate();
@@ -70,6 +68,12 @@ void loop(){
     Serial.print("HOUR: ");
     Serial.println(timeStamp);
     delay(1000);
-            
+
+    // Verifica se é o horário programado para iniciar o fechamento do portão 
+
+    // Verifica estatus do Sensor do Portão
+
+    // Comando de Abertura do Portão
+           
 
 }
