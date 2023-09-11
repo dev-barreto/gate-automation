@@ -1,5 +1,5 @@
 # ESP32 Gate Automation
-## Projetct
+## Project
 
   Residential or building automation project, so that the gates have a schedule for the start of automatic operation such as closing and the operation of photocells.
 
