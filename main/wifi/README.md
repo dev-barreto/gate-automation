@@ -13,5 +13,5 @@
 
 ## Output Serial
 
-    If everything is working you can see on the serial output "ESP32 Connected to (YOUR NETWORK)
+    If everything is working you can see on the serial output "ESP32 Connected to (YOUR NETWORK)"
     

@@ -1,7 +1,7 @@
 #include <WiFi.h>
 
-const char* ssid = "yourNetworkName";
-const char* password = "yourNetworkPassword";
+const char* ssid = "social";
+const char* password = "tplink123";
 
 void setup(){
     Serial.begin(115200);
@@ -17,6 +17,7 @@ void setup(){
     }
 
     Serial.println("\nConnected to the WiFi network");
+    Serial.println(WiFi.ssid());
     Serial.print("Local ESP32 IP: ");
     Serial.println(WiFi.localIP());
 }
