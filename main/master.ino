@@ -4,6 +4,8 @@ const char* ssid = "social";
 const char* password = "tplink123";
 
 void setup(){
+
+    // WiFi Connection
     Serial.begin(115200);
     delay(1000);
 
@@ -20,9 +22,16 @@ void setup(){
     Serial.println(WiFi.ssid());
     Serial.print("Local ESP32 IP: ");
     Serial.println(WiFi.localIP());
+
+    //Command Open Gate
+
+    
+
 }
 
 void loop(){
+
+    // Command Open Gete
 
 
 }
