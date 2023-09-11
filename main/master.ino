@@ -7,7 +7,7 @@ void setup(){
     Serial.begin(115200);
     delay(1000);
 
-    WiFi.mode(WIFI_STA); //Optional
+    WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
     Serial.println("\nConnecting");
 
@@ -22,4 +22,7 @@ void setup(){
     Serial.println(WiFi.localIP());
 }
 
-void loop(){}
+void loop(){
+
+
+}
