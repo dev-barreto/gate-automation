@@ -5,8 +5,8 @@
 #include <RTClib.h>
 
 // Configurações da Rede
-const char* ssid = "social";
-const char* password = "tplink123";
+const char* ssid = "Village 3";
+const char* password = "adminv31500";
 
 // Informações de data e Hora
 RTC_DS3231 rtc;
@@ -41,36 +41,42 @@ void setup(){
   Serial.print("Local ESP32 IP: ");
   Serial.println(WiFi.localIP());
 
-  // Informações da Data e hora
-
-  rtc.begin();
-
-  rtc.adjust(DateTime(2023, 9, 11, 14, 6, 0));
-
 }
 
 void loop(){
 
-  // Informações da Data e Hora
-  DateTime now = rtc.now();
-  // Verifica se é o horário programado para iniciar o fechamento do portão 
-  int year = now.year();
-  int month = now.month();
-  int day = now.day();
-  int hour = now.hour();
-  int minute = now.minute();
-  int seconds = now.seconds();
+  // Obtém a hora atual
+  int horaAtual = hour();
+  
+  // Obtém o estado do sensor do portão
+  int estadoPortao = digitalRead(sensorPortaoPin);
 
-  if (now.time() == 19 && 6) {
-    digitalWrite(comPin, HIGH);
+    // Verifica a hora atual e o estado do sensor para tomar decisões
+  if (horaAtual == 19) {
+    if (estadoPortao == HIGH) {
+      // Sensor HIGH às 19:00h, libera as fotocélulas
+      digitalWrite(fotocelulasPin, HIGH);
+    } else {
+      // Sensor LOW às 19:00h, libera as fotocélulas e envia comando de fechamento do portão
+      digitalWrite(fotocelulasPin, HIGH);
+      digitalWrite(fechamentoPortaoPin, HIGH);
+    }
+  } else if (horaAtual == 6) {
+    if (estadoPortao == LOW) {
+      // Sensor LOW às 6:00h, libera as fotocélulas
+      digitalWrite(fotocelulasPin, LOW);
+    } else {
+      // Sensor HIGH às 6:00h, libera as fotocélulas e envia comando de abertura do portão
+      digitalWrite(fotocelulasPin, LOW);
+      digitalWrite(aberturaPortaoPin, HIGH);
+    }
+  } else {
+    // Em outros horários, desativa as fotocélulas e os comandos do portão
+
   }
-  else{
-    digitalWrite(comPin, LOW);
-  }
-
-  // Verifica estatus do Sensor do Portão
-
-  // Comando de Abertura do Portão
-           
+  
+  // Outras ações ou código podem ser adicionados aqui
+  
+  delay(1000); // Aguarde 1 segundo antes de verificar novamente
 
 }
