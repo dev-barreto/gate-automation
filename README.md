@@ -1,10 +1,14 @@
 # ESP32 Gate Automation
-## Idéia
+## Projetct
 
-  Este projeto será usado para realizar a automação de portões com central de comando, será possivel configurar inicio de autofechamento e aberto assim como o desligamento do sistema para que se torne manual.
+  Residential or building automation project, so that the gates have a schedule for the start of automatic operation such as closing and the operation of photocells.
 
-## Sistema de Agenda
+## Automating System
 
-  Em versões futuras será integrado comandos de voz via alexa ou google assistend.
+  Firstly, the scheduling system will only work via a private website.
 
-## Autoabertura com Sensores
+In future versions it will be integrated with Alexa and Google Assistant commands.
+
+With options to configure directly via an app on your cell phone
+
+## Sensor
