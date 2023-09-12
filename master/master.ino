@@ -5,8 +5,8 @@
 #include <RTClib.h>
 
 // Configurações da Rede
-const char* ssid = "Village 3";
-const char* password = "adminv31500";
+const char* ssid = "username";
+const char* password = "password";
 
 // Informações de data e Hora
 RTC_DS3231 rtc;
@@ -63,16 +63,17 @@ void loop(){
     }
   } else if (horaAtual == 6) {
     if (estadoPortao == LOW) {
-      // Sensor LOW às 6:00h, libera as fotocélulas
+      // Sensor LOW às 6:00h, desativa as fotocélulas
       digitalWrite(fotocelulasPin, LOW);
     } else {
-      // Sensor HIGH às 6:00h, libera as fotocélulas e envia comando de abertura do portão
+      // Sensor HIGH às 6:00h, destiva as fotocélulas e envia comando de abertura do portão
       digitalWrite(fotocelulasPin, LOW);
       digitalWrite(aberturaPortaoPin, HIGH);
     }
   } else {
     // Em outros horários, desativa as fotocélulas e os comandos do portão
-
+    digitalWrite(aberturaPortaoPin, LOW);
+    digitalWrite(fechamentoPortaoPin, LOW);
   }
   
   // Outras ações ou código podem ser adicionados aqui
