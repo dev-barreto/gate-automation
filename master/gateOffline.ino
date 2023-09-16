@@ -1,5 +1,4 @@
 #include <WiFi.h>
-#include <NTCPClient.h>
 #include <WiFiUdp.h>
 #include <Wire.h>
 #include <RTClib.h>
@@ -11,17 +10,16 @@ const char* password = "password";
 // Informações de data e Hora
 RTC_DS3231 rtc;
 
-const int sensorPortaoPin = 2; // Pino onde o sensor do portão está conectado
-const int fotocelulasPin = 3;  // Pino onde as fotocélulas estão conectadas
-const int aberturaPortaoPin = 4; // Pino para o comando de abertura do portão
-const int fechamentoPortaoPin = 5; // Pino para o comando de fechamento do portão
+const int gateSensor = 2; // Pino onde o sensor do portão está conectado
+const int photocellsPin = 3;  // Pino onde as fotocélulas estão conectadas
+const int commandGatePin = 4; // Pino para o comando de abertura do portão
 
 void setup(){
 
-  pinMode(sensorPortaoPin, INPUT); // Pino em modo de entrada de informações
-  pinMode(fotocelulasPin, OUTPUT); // Pino em modo de saida de informações
-  pinMode(aberturaPortaoPin, OUTPUT); // Pino em modo de saida de informações
-  pinMode(fechamentoPortaoPin, OUTPUT); // Pino em modo de saida de informações
+  pinMode(gateSensor INPUT); // Pino em modo de entrada de informações
+  pinMode(photocellsPin, OUTPUT); // Pino em modo de saida de informações
+  pinMode(commandGatePin, OUTPUT); // Pino em modo de saida de informações
+
 
   // Conecção WiFi
   Serial.begin(115200);
@@ -46,34 +44,33 @@ void setup(){
 void loop(){
 
   // Obtém a hora atual
-  int horaAtual = hour();
+  int realTime = hour();
   
   // Obtém o estado do sensor do portão
-  int estadoPortao = digitalRead(sensorPortaoPin);
+  int gateState = digitalRead(gateSensor);
 
     // Verifica a hora atual e o estado do sensor para tomar decisões
-  if (horaAtual == 19) {
-    if (estadoPortao == HIGH) {
+  if (realTime == 19) {
+    if (gateState == HIGH) {
       // Sensor HIGH às 19:00h, libera as fotocélulas
-      digitalWrite(fotocelulasPin, HIGH);
+      digitalWrite(photocellsPin, HIGH);
     } else {
       // Sensor LOW às 19:00h, libera as fotocélulas e envia comando de fechamento do portão
-      digitalWrite(fotocelulasPin, HIGH);
-      digitalWrite(fechamentoPortaoPin, HIGH);
+      digitalWrite(photocellsPin, HIGH);
+      digitalWrite(commandGatePin, HIGH);
     }
-  } else if (horaAtual == 6) {
-    if (estadoPortao == LOW) {
+  } else if (realTime == 6) {
+    if (gateState == LOW) {
       // Sensor LOW às 6:00h, desativa as fotocélulas
-      digitalWrite(fotocelulasPin, LOW);
+      digitalWrite(photocellsPin, LOW);
     } else {
       // Sensor HIGH às 6:00h, destiva as fotocélulas e envia comando de abertura do portão
-      digitalWrite(fotocelulasPin, LOW);
-      digitalWrite(aberturaPortaoPin, HIGH);
+      digitalWrite(photocellsPin, LOW);
+      digitalWrite(commandGatePin, HIGH);
     }
   } else {
     // Em outros horários, desativa as fotocélulas e os comandos do portão
-    digitalWrite(aberturaPortaoPin, LOW);
-    digitalWrite(fechamentoPortaoPin, LOW);
+    digitalWrite(commandGatePin, LOW);
   }
   
   // Outras ações ou código podem ser adicionados aqui
