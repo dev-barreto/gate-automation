@@ -6,8 +6,8 @@
 #define command 4
 #define sensor 19
 
-const char* ssid = "ssidWifi";
-const char* password = "passwordWifi";
+const char* ssid = "NETWORK_NAME";
+const char* password = "NETWORK_PASSWORD";
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org");
@@ -38,7 +38,7 @@ void loop() {
     Serial.println(timeClient.getFormattedTime());
 
     // Verifique os horários e execute funções conforme necessário
-    if (timeClient.getHours() == 12 && timeClient.getMinutes() == 17 && timeClient.getSeconds() == 00) {
+    if (timeClient.getHours() == 19 && timeClient.getMinutes() == 00 && timeClient.getSeconds() == 00) {
         // Execute uma função no horário determinado
             digitalWrite(LED, HIGH);
             digitalWrite(sensor, HIGH);
@@ -49,7 +49,7 @@ void loop() {
       // Excute algo fora do horário não necessário
     }
 
-    if (timeClient.getHours() == 12 && timeClient.getMinutes() == 17 && timeClient.getSeconds() == 15) {
+    if (timeClient.getHours() == 06 && timeClient.getMinutes() == 00 && timeClient.getSeconds() == 00) {
       // Executa a função no horário determinado
 
       digitalWrite(LED, LOW);
