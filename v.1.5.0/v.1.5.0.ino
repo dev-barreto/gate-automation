@@ -7,7 +7,7 @@
 #define sensor 19
 
 const char* ssid = "SSID_NETWORK";
-const char* password = "NETWORK_PASS";
+const char* password = "PASSWORD_NETWORK";
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org");
