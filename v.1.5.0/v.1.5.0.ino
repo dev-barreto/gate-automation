@@ -7,7 +7,7 @@
 #define sensor 19
 
 const char* ssid = "SSID_NETWORK";
-const char* password = "PASS_NETWORK";
+const char* password = "NETWORK_PASS";
 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org");
@@ -20,8 +20,12 @@ bool dayTime () {
 
   if (currentHour >= dayStartTime && currentHour < dayEndTime) {
     return true;
+    Serial.println("Day Cycle.");
+    Serial.println(timeClient.getFormattedTime());
   } else {
     return false;
+    Serial.println("Night Cycle.");
+    Serial.println(timeClient.getFormattedTime());
   }
 }
 
@@ -51,7 +55,7 @@ void setup() {
 void loop() {
 
     timeClient.update();
-    Serial.println(dayTime());
+
 
     if (dayTime()) {
       digitalWrite(LED, LOW);
@@ -61,5 +65,5 @@ void loop() {
       digitalWrite(sensor, HIGH);
     }
     
-  delay(100);
+  delay(1000);
 }
