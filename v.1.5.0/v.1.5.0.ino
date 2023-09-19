@@ -12,52 +12,54 @@ const char* password = "PASS_NETWORK";
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org");
 
+bool dayTime () {
+  int currentHour = timeClient.getHours();
+
+  int dayStartTime = 6;
+  int dayEndTime = 19;
+
+  if (currentHour >= dayStartTime && currentHour < dayEndTime) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
 void setup() {
+
     Serial.begin(115200);
     WiFi.begin(ssid, password);
+
     while (WiFi.status() != WL_CONNECTED) {
         delay(1000);
         Serial.println("Conectando ao WiFi...");
     }
+
     Serial.println("Conectado ao WiFi.");
     digitalWrite(LED, HIGH);
     delay(100);
     digitalWrite(LED, LOW);
-
     timeClient.begin();
-    timeClient.setTimeOffset(-3 * 3600); // Ajuste o fuso horário para o Brasil (GMT-3)
+    timeClient.setTimeOffset(-3 * 3600);
+
 
     pinMode (LED, OUTPUT);
     pinMode (sensor, OUTPUT);
     pinMode (command, OUTPUT);
-
 }
-
 void loop() {
+
     timeClient.update();
-    Serial.println(timeClient.getFormattedTime());
+    Serial.println(dayTime());
 
-    // Verifique os horários e execute funções conforme necessário
-    if (timeClient.getHours() == 19 && timeClient.getMinutes() == 00 && timeClient.getSeconds() == 00) {
-        // Execute uma função no horário determinado
-            digitalWrite(LED, HIGH);
-            digitalWrite(sensor, HIGH);
-//            digitalWrite(command, HIGH)
-//            delay(1000);
-//            digitalWrite(command, LOW)
-    } else {
-      // Excute algo fora do horário não necessário
-    }
-
-    if (timeClient.getHours() == 06 && timeClient.getMinutes() == 00 && timeClient.getSeconds() == 00) {
-      // Executa a função no horário determinado
-
+    if (dayTime()) {
       digitalWrite(LED, LOW);
       digitalWrite(sensor, LOW);
+    } else {
+      digitalWrite(LED, HIGH);
+      digitalWrite(sensor, HIGH);
     }
-
-
-    // Outros horários e funções podem ser adicionados aqui
-
-    delay(100); // Aguarde um minuto antes de verificar novamente
+    
+  delay(100);
 }
